@@ -1,0 +1,17 @@
+.plastic/
+.vscode/
+Packages/
+Assembly-CSharp.csproj
+ignore.conf
+penguins-dont-fly.sln
+Library/
+Logs/
+ProjectSettings/
+Temp/
+UserSettings/
+Assets/*.meta
+Assets/Animation/
+Assets/Scenes/
+Assets/Sprites/
+Assets/Scripts/*.meta
+.vsconfig
