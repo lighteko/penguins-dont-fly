@@ -1,21 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Hook : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float speed = 10f;
+    public bool thrown = false;
+
+    void Start() { }
+    void FixedUpdate()
     {
-        
+        // Move the projectile in the direction of the mouse
+        if (!thrown && Input.GetMouseButtonDown(0)) {
+            thrown = true;
+            MoveTowardsMouse();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void MoveTowardsMouse()
     {
-        if (Input.GetKeyDown(KeyCode.P)) {
-            Vector2 forceDirection = new Vector2(5,4);
-            GetComponent<Rigidbody2D>().AddForce(forceDirection * 5f);
-        }
+        Vector3 mousePosition = Input.mousePosition;
+        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Vector3 direction = (worldMousePosition - transform.position).normalized;
+
+        // Move the projectile
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 }
