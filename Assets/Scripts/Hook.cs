@@ -6,7 +6,7 @@ using UnityEngine;
 public class Hook : MonoBehaviour
 {
     public float speed = 10f;
-    public bool thrown = false;
+    private bool thrown = false;
 
     void Start() { }
     void FixedUpdate()
