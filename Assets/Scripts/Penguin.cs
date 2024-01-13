@@ -13,6 +13,9 @@ public class Penguin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.P)) {
+            Vector2 forceDirection = new Vector2(5,4);
+            GetComponent<Rigidbody2D>().AddForce(forceDirection * 5f);
+        }
     }
 }
