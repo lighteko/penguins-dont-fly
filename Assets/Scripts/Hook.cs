@@ -7,14 +7,21 @@ public class Hook : MonoBehaviour
 {
     public float speed = 10f;
     private bool thrown = false;
+    public HingeJoint2D joint;
 
-    void Start() { }
+    void Start()
+    {
+        joint = GetComponent<HingeJoint2D>();
+    }
     void FixedUpdate()
     {
         // Move the projectile in the direction of the mouse
-        if (!thrown && Input.GetMouseButtonDown(0)) {
+        if (!thrown && Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Hook Called");
             thrown = true;
             MoveTowardsMouse();
+            if (joint != null) joint.enabled = false;
         }
     }
 
