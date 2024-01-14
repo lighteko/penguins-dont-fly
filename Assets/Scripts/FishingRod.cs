@@ -16,21 +16,26 @@ public class FishingRod : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!thrown && Input.GetMouseButton(0)) {
+        if (!thrown && Input.GetMouseButton(0))
+        {
             Debug.Log("FishingRod Called");
             GenerateString();
             thrown = true;
         }
-        lineRenderer.SetPosition(0, gameObject.transform.position);
-        lineRenderer.SetPosition(1, target.position);
+
+        if (thrown)
+        {
+            lineRenderer.SetPosition(0, gameObject.transform.position);
+            lineRenderer.SetPosition(1, target.position);
+        }
     }
 
     void GenerateString()
     {
         SpringJoint2D springJoint = gameObject.AddComponent<SpringJoint2D>();
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.01f;
-        lineRenderer.endWidth = 0.01f;
+        lineRenderer.startWidth = 0.025f;
+        lineRenderer.endWidth = 0.025f;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.white;
@@ -45,14 +50,16 @@ public class FishingRod : MonoBehaviour
         springJoint.dampingRatio = 0.5f;  // Adjust the damping ratio as needed
     }
 
-    void WindString() {
+    void WindString()
+    {
         SpringJoint2D springJoint = GetComponent<SpringJoint2D>();
         float originalDistance = springJoint.distance;
-        if (originalDistance/5 >= 3f/4f) Destroy(springJoint);
+        if (originalDistance / 5 >= 3f / 4f) Destroy(springJoint);
         else springJoint.distance = originalDistance - 0.5f;
     }
 
-    void LoosenString() {
-        
+    void LoosenString()
+    {
+
     }
 }
