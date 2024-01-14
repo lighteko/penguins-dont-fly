@@ -14,10 +14,11 @@ public class Hook : MonoBehaviour
     {
         joint = GetComponent<HingeJoint2D>();
     }
-    void OnCollisionEnter2D(Collision2D col) {
-        if (col.gameObject.CompareTag("Terrain")) {
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Terrain"))
             gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-        }
+
     }
     void FixedUpdate()
     {
