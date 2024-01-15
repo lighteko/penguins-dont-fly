@@ -7,29 +7,21 @@ using UnityEngine;
 public class Hook : MonoBehaviour
 {
     public float speed = 10f;
-    private bool thrown = false;
     public HingeJoint2D joint;
 
     void Start()
     {
         joint = GetComponent<HingeJoint2D>();
     }
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.CompareTag("Terrain"))
-            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
+    void Update() {
+        if (Input.GetMouseButton(1)) 
+            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
-    void FixedUpdate()
-    {
-        // Move the projectile in the direction of the mouse
-        if (!thrown && Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Hook Called");
-            thrown = true;
-            MoveTowardsMouse();
-            if (joint != null) joint.enabled = false;
-        }
+
+    public void CastingHook() {
+        MoveTowardsMouse();
+        GetComponent<HingeJoint2D>().enabled = false;
     }
 
     void MoveTowardsMouse()
@@ -40,5 +32,12 @@ public class Hook : MonoBehaviour
 
         // Move the projectile
         gameObject.GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Terrain"))
+            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
     }
 }

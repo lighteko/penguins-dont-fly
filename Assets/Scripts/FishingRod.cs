@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FishingRod : MonoBehaviour
@@ -20,6 +21,7 @@ public class FishingRod : MonoBehaviour
         {
             Debug.Log("FishingRod Called");
             GenerateString();
+            target.gameObject.SendMessage("CastingHook");
             thrown = true;
         }
 
