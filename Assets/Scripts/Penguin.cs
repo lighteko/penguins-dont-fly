@@ -14,10 +14,10 @@ public class Penguin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 mousePosition = Input.mousePosition;
-        Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        if (worldMousePosition.x > transform.position.x) spriteRenderer.flipY = false;
-        else spriteRenderer.flipY = true;
+        // Vector2 mousePosition = Input.mousePosition;
+        // Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        // if (worldMousePosition.x > transform.position.x) spriteRenderer.flipX = false;
+        // else spriteRenderer.flipX = true;
     }
 
     void FixedUpdate() {

@@ -6,8 +6,9 @@ using UnityEngine;
 public class FishingRod : MonoBehaviour
 {
     public Transform target;
+    public GameObject prefab;
     private bool thrown = false;
-    private LineRenderer lineRenderer;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -25,39 +26,25 @@ public class FishingRod : MonoBehaviour
             thrown = true;
         }
 
-        if (thrown)
-        {
-            lineRenderer.SetPosition(0, gameObject.transform.position);
-            lineRenderer.SetPosition(1, target.position);
-        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) WindString();
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) LoosenString();
     }
 
     void GenerateString()
     {
-        SpringJoint2D springJoint = gameObject.AddComponent<SpringJoint2D>();
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.025f;
-        lineRenderer.endWidth = 0.025f;
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = Color.white;
-        lineRenderer.endColor = Color.white;
-
-        // Attach the SpringJoint2D to the startPoint's Rigidbody2D
-        springJoint.connectedBody = target.GetComponent<Rigidbody2D>();
-
-        // Set other SpringJoint2D properties as needed
-        springJoint.autoConfigureDistance = false;
-        springJoint.distance = 3f;
-        springJoint.frequency = 1f;  // Adjust the frequency as needed
-        springJoint.dampingRatio = 0.5f;  // Adjust the damping ratio as needed
+        GameObject cursor = gameObject;
+        for (int i = 0; i < 20; i++) {
+            GameObject stringTip = Instantiate(prefab, transform);
+            if (i == 0) stringTip.GetComponent<HingeJoint2D>().connectedBody = gameObject.GetComponent<Rigidbody2D>();
+            else stringTip.GetComponent<HingeJoint2D>().connectedBody = cursor.GetComponent<Rigidbody2D>();
+            cursor = stringTip;
+            if (i == 19) target.GetComponent<HingeJoint2D>().connectedBody = cursor.GetComponent<Rigidbody2D>();
+        }
     }
 
     void WindString()
     {
-        SpringJoint2D springJoint = GetComponent<SpringJoint2D>();
-        float originalDistance = springJoint.distance;
-        if (originalDistance / 5 >= 3f / 4f) Destroy(springJoint);
-        else springJoint.distance = originalDistance - 0.5f;
+
     }
 
     void LoosenString()
