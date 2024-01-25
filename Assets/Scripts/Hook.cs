@@ -38,6 +38,5 @@ public class Hook : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Terrain") && !joint.enabled)
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-
     }
 }

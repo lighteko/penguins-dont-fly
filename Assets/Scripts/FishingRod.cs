@@ -26,15 +26,18 @@ public class FishingRod : MonoBehaviour
     {
         if (!thrown && Input.GetMouseButton(0))
         {
-            Debug.Log("FishingRod Called");
             GenerateString();
             target.SendMessage("CastingHook");
             thrown = true;
         }
 
-        if (thrown && attached && Input.GetMouseButton(1))
-        {
-            WindString();
+        if (thrown && attached && Input.GetMouseButton(1)) WindString();
+
+        if (thrown && !attached && Input.GetMouseButton(1)) {
+            Destroy(GetComponent<HingeJoint2D>());
+            Destroy(GetComponent<LineRenderer>());
+            target.SendMessage("CuttingOff");
+            thrown = false;
         }
 
         if (thrown && lineRenderer != null)
@@ -59,9 +62,9 @@ public class FishingRod : MonoBehaviour
 
         // Set other SpringJoint2D properties as needed
         springJoint.autoConfigureDistance = false;
-        springJoint.distance = 3f;
+        springJoint.distance = 4f;
         springJoint.frequency = 1f;  // Adjust the frequency as needed
-        springJoint.dampingRatio = 0.5f;  // Adjust the damping ratio as needed
+        springJoint.dampingRatio = 1f;  // Adjust the damping ratio as needed
     }
 
     void WindString()

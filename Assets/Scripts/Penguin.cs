@@ -8,11 +8,10 @@ public class Penguin : MonoBehaviour
 {
 
     public GameObject target;
-    public float speed;
+    public float speed = 10f;
 
     void Start() {
         target = transform.Find("fishing rod").transform.Find("hook").gameObject;
-        speed = 5f;
     }
 
     void MoveToTarget() {
@@ -21,6 +20,6 @@ public class Penguin : MonoBehaviour
         Vector2 direction = targetPosition - currentPosition;
 
         // Move the projectile
-        gameObject.GetComponent<Rigidbody2D>().AddForce(direction * (speed = (float) Math.Sqrt(speed)), ForceMode2D.Impulse);
+        gameObject.GetComponent<Rigidbody2D>().AddForce(direction * (speed *= 0.9f), ForceMode2D.Impulse);
     }
 }
