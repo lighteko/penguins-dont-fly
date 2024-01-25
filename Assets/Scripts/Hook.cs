@@ -14,14 +14,15 @@ public class Hook : MonoBehaviour
         joint = GetComponent<HingeJoint2D>();
     }
 
-    void Update() {
-        // if (Input.GetMouseButton(1)) 
-        //     gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-    }
-
     public void CastingHook() {
         MoveTowardsMouse();
-        GetComponent<HingeJoint2D>().enabled = false;
+        joint.enabled = false;
+    }
+
+    void CuttingOff() {
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        transform.localPosition = new Vector3(0f,0f,0f);
+        joint.enabled = true;
     }
 
     void MoveTowardsMouse()
@@ -30,14 +31,13 @@ public class Hook : MonoBehaviour
         Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         Vector2 direction = (worldMousePosition - transform.position.ConvertTo<Vector2>()).normalized;
 
-        // Move the projectile
-        gameObject.GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
+        GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Terrain"))
-            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        if (col.gameObject.CompareTag("Terrain") && !joint.enabled)
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
     }
 }

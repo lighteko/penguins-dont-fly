@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -36,9 +37,9 @@ public class FishingRod : MonoBehaviour
             WindString();
         }
 
-        if (thrown)
+        if (thrown && lineRenderer != null)
         {
-            lineRenderer.SetPosition(0, gameObject.transform.position);
+            lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, target.position);
         }
     }
@@ -65,11 +66,12 @@ public class FishingRod : MonoBehaviour
 
     void WindString()
     {
+        float distance = (target.position - transform.position).magnitude;
+        if (distance < 1f) {
+            Destroy(GetComponent<HingeJoint2D>());
+            Destroy(GetComponent<LineRenderer>());
+            target.SendMessage("CuttingOff");
+        }
         transform.parent.SendMessage("MoveToTarget");
-    }
-
-    void LoosenString()
-    {
-
     }
 }

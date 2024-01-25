@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,6 @@ public class Penguin : MonoBehaviour
         Vector2 direction = targetPosition - currentPosition;
 
         // Move the projectile
-        gameObject.GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
+        gameObject.GetComponent<Rigidbody2D>().AddForce(direction * (speed = (float) Math.Sqrt(speed)), ForceMode2D.Impulse);
     }
 }
