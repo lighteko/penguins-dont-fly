@@ -5,23 +5,21 @@ using UnityEngine.Scripting.APIUpdating;
 
 public class Penguin : MonoBehaviour
 {
-    SpriteRenderer spriteRenderer;
-    void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+
+    public GameObject target;
+    public float speed;
+
+    void Start() {
+        target = transform.Find("fishing rod").transform.Find("hook").gameObject;
+        speed = 5f;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Vector2 mousePosition = Input.mousePosition;
-        // Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        // if (worldMousePosition.x > transform.position.x) spriteRenderer.flipX = false;
-        // else spriteRenderer.flipX = true;
-    }
+    void MoveToTarget() {
+        Vector2 targetPosition = target.transform.position;
+        Vector2 currentPosition = transform.position;
+        Vector2 direction = targetPosition - currentPosition;
 
-    void FixedUpdate() {
-        
+        // Move the projectile
+        gameObject.GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
     }
-
 }

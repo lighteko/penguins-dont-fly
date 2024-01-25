@@ -15,8 +15,8 @@ public class Hook : MonoBehaviour
     }
 
     void Update() {
-        if (Input.GetMouseButton(1)) 
-            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        // if (Input.GetMouseButton(1)) 
+        //     gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 
     public void CastingHook() {
