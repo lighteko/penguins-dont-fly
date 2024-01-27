@@ -11,10 +11,12 @@ public class FishingRod : MonoBehaviour
     private LineRenderer lineRenderer;
 
     private bool attached = false;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
         target = transform.Find("hook");
+        anim = GetComponent<Animator>();
     }
     void Update()
     {
@@ -38,7 +40,11 @@ public class FishingRod : MonoBehaviour
             thrown = true;
         }
 
-        if (thrown && attached && Input.GetMouseButton(1)) WindString();
+        if (thrown && attached && Input.GetMouseButton(1)) {
+            anim.SetBool("isWinding", true);
+            WindString();
+        } else anim.SetBool("isWinding", false);
+
 
         if (thrown && !attached && Input.GetMouseButton(1)) {
             Destroy(GetComponent<HingeJoint2D>());
@@ -83,8 +89,7 @@ public class FishingRod : MonoBehaviour
             target.SendMessage("CuttingOff");
             thrown = false;
         }
-        SpringJoint2D springJoint = GetComponent<SpringJoint2D>();
-        if (springJoint != null) springJoint.distance -= 0.02f;
+        if (TryGetComponent<SpringJoint2D>(out var springJoint)) springJoint.distance -= 0.02f;
         transform.parent.SendMessage("MoveToTarget");
     }
 }
