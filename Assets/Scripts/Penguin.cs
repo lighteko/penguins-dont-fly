@@ -8,10 +8,11 @@ public class Penguin : MonoBehaviour
 {
 
     public GameObject target;
-    public float speed = 10f;
+    public float speed;
 
     void Start() {
         target = transform.Find("fishing rod").transform.Find("hook").gameObject;
+        speed = 7f;
     }
 
     void MoveToTarget() {

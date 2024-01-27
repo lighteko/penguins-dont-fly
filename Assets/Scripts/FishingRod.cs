@@ -19,6 +19,13 @@ public class FishingRod : MonoBehaviour
     void Update()
     {
         attached = target.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Static;
+        float distance = (target.position - transform.position).magnitude;
+        if (distance > 7f) {
+            Destroy(GetComponent<HingeJoint2D>());
+            Destroy(GetComponent<LineRenderer>());
+            target.SendMessage("CuttingOff");
+            thrown = false;
+        }
     }
 
     // Update is called once per frame
@@ -70,10 +77,11 @@ public class FishingRod : MonoBehaviour
     void WindString()
     {
         float distance = (target.position - transform.position).magnitude;
-        if (distance < 1f) {
+        if (distance < 2f) {
             Destroy(GetComponent<HingeJoint2D>());
             Destroy(GetComponent<LineRenderer>());
             target.SendMessage("CuttingOff");
+            thrown = false;
         }
         transform.parent.SendMessage("MoveToTarget");
     }
