@@ -70,7 +70,7 @@ public class FishingRod : MonoBehaviour
         // Set other SpringJoint2D properties as needed
         springJoint.autoConfigureDistance = false;
         springJoint.distance = 4f;
-        springJoint.frequency = 1f;  // Adjust the frequency as needed
+        springJoint.frequency = 5f;  // Adjust the frequency as needed
         springJoint.dampingRatio = 1f;  // Adjust the damping ratio as needed
     }
 
@@ -83,6 +83,8 @@ public class FishingRod : MonoBehaviour
             target.SendMessage("CuttingOff");
             thrown = false;
         }
+        SpringJoint2D springJoint = GetComponent<SpringJoint2D>();
+        if (springJoint != null) springJoint.distance -= 0.02f;
         transform.parent.SendMessage("MoveToTarget");
     }
 }

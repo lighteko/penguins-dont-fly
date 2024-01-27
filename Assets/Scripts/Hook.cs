@@ -21,7 +21,6 @@ public class Hook : MonoBehaviour
 
     void CuttingOff() {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        Destroy(GetComponent<HingeJoint2D>());
         transform.localPosition = new Vector3(0f,0f,0f);
         joint.enabled = true;
     }
